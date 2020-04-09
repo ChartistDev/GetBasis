@@ -1,0 +1,23 @@
+.homeScreenHeading {
+    display: flex;
+    justify-content: center;
+    align:center;
+}
+.welcomeDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+}
+.parentDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.mobileNumberDiv {
+    display:flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin:0px;
+}

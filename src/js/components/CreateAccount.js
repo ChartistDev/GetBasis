@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {connect} from "react-redux";
+import Logo from "./Logo";
 class CreateAccount extends Component {
   constructor() {
     super();
@@ -8,9 +9,7 @@ class CreateAccount extends Component {
   render() {
     return (
         <div className = "parentDiv">
-        <div className = "homeScreenHeading" >
-          <img style = {{height: "80px"}} src = {this.props.heading.imageUrl}></img>
-        </div>
+        <Logo/>
         <div className = "createAccDiv">
            <h2>Create an Account</h2>
            <p>Enter a few details to complete the registration process.</p>

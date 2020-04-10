@@ -3,7 +3,8 @@ import {connect} from "react-redux";
 import {setPhoneNumber} from "../Actions";
 import LoginForm from "./LoginForm";
 import "../../getbasis.module.css";
-import {Button} from "@material-ui/core"
+import {Button, Typography} from "@material-ui/core";
+
 
 class WelcomeBox extends Component {
   constructor() {
@@ -33,7 +34,7 @@ class WelcomeBox extends Component {
                <input type = "text" pattern="\d{10}" maxLength = "10" onChange = {this.onInputChange} value = {this.props.phoneNumber} />
            </div>
            <div>
-               <Button disabled = {this.props.phoneNumber.length === 10 ? false : true} type = "submit" >Get OTP</Button>
+               <Button color = "primary" variant = "outlined" disabled = {this.props.phoneNumber.length === 10 ? false : true} type = "submit" >Get OTP</Button>
            </div>
            </form>
        </div>

@@ -21,3 +21,15 @@
     align-items: center;
     margin:0px;
 }
+.createAccDiv {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.createAccForm {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}

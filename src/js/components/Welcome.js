@@ -1,36 +1,53 @@
 import React, { Component } from "react";
 import {connect} from "react-redux";
+import {setPhoneNumber} from "../Actions";
+import LoginForm from "./LoginForm";
 import "../../getbasis.module.css";
+import {Button} from "@material-ui/core"
 
 class WelcomeBox extends Component {
   constructor() {
     super();
     this.otpButtonClicked = this.otpButtonClicked.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
   }
-
+  onInputChange(e){
+    this.props.setPhoneNumber(e.target.value);
+  }
   otpButtonClicked(event) {
+      event.preventDefault();
+      this.props.history.push("./OTP");
+
   }
 
   render() {
-      console.log(this.props);
     return (
-       <div className = "welcomeDiv">
-           <h2>Welcome To Basis!</h2>
-           <p>Own Your Financial Destiny.</p>
+        
+       <div>
+           <LoginForm/>
            <p>Enter Your Mobile Number To get Started:</p>
+           <form onSubmit = {this.otpButtonClicked}>
            <div className = "mobileNumberDiv">
                <label>Mobile Number</label>
                <p>+ 91</p>
-               <input type = "number"/>
+               <input type = "text" pattern="\d{10}" maxLength = "10" onChange = {this.onInputChange} value = {this.props.phoneNumber} />
            </div>
            <div>
-               <button onClick = {this.otpButtonClicked}>Get OTP</button>
+               <Button disabled = {this.props.phoneNumber.length === 10 ? false : true} type = "submit" >Get OTP</Button>
            </div>
+           </form>
        </div>
     );
   }
 }
-const mapDispatchToProps = (dispatch) => {
-
+const mapStateToProps = (state) => {
+return {
+    phoneNumber : state.Login.phoneNumber
 }
-export default WelcomeBox;
+}
+const mapDispatchToProps = (dispatch) => {
+    return{
+        setPhoneNumber: (number) => dispatch(setPhoneNumber(number))
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(WelcomeBox);

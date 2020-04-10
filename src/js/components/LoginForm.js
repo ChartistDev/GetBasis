@@ -9,15 +9,18 @@ class Login extends Component {
   }
 
   render() {
-      console.log(this.props);
     return (
         <div className = "parentDiv">
         <div className = "homeScreenHeading" >
           <img style = {{height: "80px"}} src = {this.props.heading.imageUrl}></img>
         </div>
-          {
+        <div className = "welcomeDiv">
+           <h2>Welcome To Basis!</h2>
+           <p>Own Your Financial Destiny.</p>
+         </div>  
+          {/* {
               <WelcomeBox/>
-          }
+          } */}
           </div>
     );
   }
@@ -25,7 +28,7 @@ class Login extends Component {
 const mapStateToProps = (state) => {
     return (
         {
-            heading: state.Login.heading
+            heading: state.Heading.heading
         }
     )
 }

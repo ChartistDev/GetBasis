@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import {connect} from "react-redux";
 import Login from "./LoginForm";
 import "../../getbasis.module.css";
-import  { setOTPArray, setToken } from "../Actions"
+import  { setOTPArray, setToken,setAccFName, setAccLName, setAccEmail, setAccRefCode, setUserId, setAuthToken } from "../Actions";
+//import {browserHistory}
 
 class OTP extends Component {
   constructor() {
@@ -52,7 +53,7 @@ class OTP extends Component {
       event.preventDefault();
       const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', "Accept": "application/json" },
         body: JSON.stringify({ "phoneNumber": this.props.phoneNumber,
                                 "verificationCode": this.props.OTP.join(""),
                                  "token":this.props.token })
@@ -61,10 +62,16 @@ class OTP extends Component {
     const otpValidation = await userlogin.json();
     if(otpValidation.success === true) {
     if(otpValidation.results.isLogin === true) {
-        this.props.history.push("/Home");
+        this.props.setAccFName(otpValidation.results.user.firstName);
+        this.props.setAccLName(otpValidation.results.user.lastName);
+        this.props.setAccEmail(otpValidation.results.user.email);
+        this.props.setAccRefCode(otpValidation.results.user.referralToken);
+        this.props.setAuthToken(otpValidation.results.user.token);
+        this.props.setUserId(otpValidation.results.user._id);
+        this.props.history.replace("/Home");
     }
     else {
-        this.props.history.push("/createAccount");
+        this.props.history.replace("/createAccount");
     }
      } 
      //else {
@@ -113,7 +120,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setOTPArray: (otp) => dispatch(setOTPArray(otp)),
-        setToken: (token) => dispatch(setToken(token))
+        setToken: (token) => dispatch(setToken(token)),
+        setAccFName : (fname) => dispatch(setAccFName(fname)),
+        setAccLName: (lname) => dispatch(setAccLName(lname)),
+        setAuthToken: (authtoken) => dispatch(setAuthToken(authtoken)),
+        setAccEmail: (email) => dispatch(setAccEmail(email)),
+        setUserId: (id) => dispatch(setUserId(id)),
+        setAccRefCode: (code) => dispatch(setAccRefCode(code))
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(OTP);

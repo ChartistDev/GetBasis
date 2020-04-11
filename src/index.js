@@ -10,6 +10,7 @@ import Home from "./js/components/Home";
 import rootReducer from "./js/Reducers";
 import {ThemeProvider} from "@material-ui/core/styles";
 import theme from "./theme";
+import ProfilePage from "./js/components/Profile";
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 class App extends React.Component {
     render() {
@@ -20,7 +21,8 @@ class App extends React.Component {
       <Route exact path="/" component={WelcomeBox} />
       <Route path = "/OTP" component = {OTP}/>
       <Route path = "/CreateAccount" component = {CreateAccount}/>
-      <Route path = "/Home" component = {Home}/>
+      <Route  path = "/Home" component = {Home}/>
+      <Route  path = "/Profile" component = {ProfilePage}/>
 
     </Router>
     </ThemeProvider>

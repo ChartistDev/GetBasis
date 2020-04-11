@@ -1,6 +1,7 @@
 const initialState = {
     "phoneNumber": "",
     "OTP" : ["","","",""],
+    "OTPAttempts":3,
     "token": undefined,
     "textBoxError":false,
     "Personal": {
@@ -78,6 +79,11 @@ const Login = (state=initialState, action) => {
                 "ReferalCode" : ""
             }
 
+        }
+        case "SET_OTP_ATTEMPTS": return {
+            ...state,
+            "OTP": ["","","",""],
+            "OTPAttempts":action.payload
         }
         default: return state
     }

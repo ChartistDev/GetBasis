@@ -57,3 +57,9 @@ export const setTNCChecked = (bool) => {
         payload:bool
     }
 }
+export const setOTPAttempts = (count) => {
+    return {
+        type:"SET_OTP_ATTEMPTS",
+        payload: count
+    }
+}

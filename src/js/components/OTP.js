@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {connect} from "react-redux";
 import Login from "./LoginForm";
 import "../../getbasis.module.css";
-import  { setOTPArray, setToken,setAccFName, setAccLName, setAccEmail, setAccRefCode, setUserId, setAuthToken } from "../Actions";
+import  { setOTPArray, setToken,setAccFName, setAccLName, setAccEmail, setAccRefCode, setUserId, setAuthToken,setOTPAttempts } from "../Actions";
 import { TextField,Button } from "@material-ui/core";
 //import {browserHistory}
 
@@ -11,10 +11,17 @@ class OTP extends Component {
     super();
     this.verifyOTP = this.verifyOTP.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
-    //this.cleanOTPSlate = this.cleanOTPSlate.bind(this);
+    this.cleanOTPSlate = this.cleanOTPSlate.bind(this);
+    this.validAttempts = 3;
     this.submitButton = {
         disabled:true
     };
+  }
+  cleanOTPSlate() {
+    this.props.setOTPAttempts(this.props.OTPAttempts-1);
+    if(this.props.OTPAttempts === 0) {
+        this.props.history.replace("/");
+    }
   }
   async componentDidMount() {
     const requestOptions = {
@@ -76,9 +83,9 @@ class OTP extends Component {
         this.props.history.replace("/createAccount");
     }
      } 
-     //else {
-    //     cleanOTPSlate();
-    // }
+     else {
+         this.cleanOTPSlate();
+     }
   }
 
   render() {
@@ -118,7 +125,8 @@ const mapStateToProps = (state) => {
     return {
         phoneNumber : state.Login.phoneNumber,
         OTP: state.Login.OTP,
-        token: state.Login.token
+        token: state.Login.token,
+        OTPAttempts: state.Login.OTPAttempts
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -130,7 +138,8 @@ const mapDispatchToProps = (dispatch) => {
         setAuthToken: (authtoken) => dispatch(setAuthToken(authtoken)),
         setAccEmail: (email) => dispatch(setAccEmail(email)),
         setUserId: (id) => dispatch(setUserId(id)),
-        setAccRefCode: (code) => dispatch(setAccRefCode(code))
+        setAccRefCode: (code) => dispatch(setAccRefCode(code)),
+        setOTPAttempts: (count) => dispatch(setOTPAttempts(count))
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(OTP);

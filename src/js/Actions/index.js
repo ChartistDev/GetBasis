@@ -8,7 +8,8 @@ export {
       setAccEmail,
       setAccRefCode,
       cleanSlate,
-      setTNCChecked
+      setTNCChecked,
+      setOTPAttempts
     } from "./LoginAction";
 
 export {

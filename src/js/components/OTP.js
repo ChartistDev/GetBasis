@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import Login from "./LoginForm";
 import "../../getbasis.module.css";
 import  { setOTPArray, setToken,setAccFName, setAccLName, setAccEmail, setAccRefCode, setUserId, setAuthToken } from "../Actions";
+import { TextField,Button } from "@material-ui/core";
 //import {browserHistory}
 
 class OTP extends Component {
@@ -32,10 +33,11 @@ class OTP extends Component {
             if (isNaN(Number(el.target.value))) {
           // do nothing when a non digit is pressed
           return;
-        }
+        } else if(el.target.value.length <= 1) {
         const otpArrayCopy = this.props.OTP.concat();
         otpArrayCopy[index] = el.target.value;
         this.props.setOTPArray(otpArrayCopy);
+        }
       }
       )        
         // auto focus to next InputText if value is not blank
@@ -92,19 +94,21 @@ class OTP extends Component {
         this.submitButton.disabled = true;
     }
     return (
-        <div>
+        <div className = "parentDiv">
         <Login/>      
         <p>Enter OTP sent via SMS</p>
         <form onSubmit = {this.verifyOTP}>
-        <div>{
+        <div className = "otpDiv">{
             this.props.OTP.map((data,index)=>{
                 return ( 
-                <input key = {index} type = "text" maxLength = "1" onChange = {this.onInputChange(index)} value = {this.props.OTP[index]}/>
+                <TextField style= {{width:"50px"}} variant = "outlined" key = {index} autoFocus={false} type = "text" onChange = {this.onInputChange(index)} value = {this.props.OTP[index]}/>
                 )
             })           
         }
         </div>
-        <button type= "submit" disabled = {this.submitButton.disabled}>Verify</button>
+        <div className = "buttonDiv">
+            <Button variant= "outlined" type= "submit" disabled = {this.submitButton.disabled}>Verify</Button>
+        </div>
         </form>
         </div>
     );

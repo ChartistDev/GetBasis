@@ -16,9 +16,6 @@ class ProfilePage extends Component {
   }
   async onSaveProfile(e) {
     e.preventDefault();
-    let emailVerificationToken = undefined,
-            verifyEmail = undefined,
-            verifyEmailStatus = undefined;
 
     const editProfileOptions = {
         method: 'PUT',

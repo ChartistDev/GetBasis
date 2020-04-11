@@ -46,9 +46,11 @@ class CreateAccount extends Component {
             "source": "WEB_APP"
             })
     };
+    //Request for Email verification
     const requestEmailVerification = await fetch("https://hiring.getbasis.co/candidate/users/email",reqEmailVerificationOptions);
     const emailverificationstatus = await requestEmailVerification.json();
 
+    //if request succesful then verify email
     if(emailverificationstatus.success === true) {
         const verifyEmailOptions = {
             method: 'POST',
@@ -62,11 +64,12 @@ class CreateAccount extends Component {
         }
         verifyEmail = await fetch("https://hiring.getbasis.co/candidate/users/email/verify",verifyEmailOptions)
         verifyEmailStatus =  await verifyEmail.json();
+
+        //If email is verfiied only then create account
         if(verifyEmailStatus.success === true) {
             const usersignup = await fetch("https://hiring.getbasis.co/candidate/users",createAccOptions);
             const SignUpSuccess = await usersignup.json();
             if(SignUpSuccess.success === true) {
-            console.log(SignUpSuccess);
             this.props.setUserID(SignUpSuccess.results.user._id);
             this.props.setAuthToken(SignUpSuccess.results.user.token);
             this.props.history.replace("/Home");

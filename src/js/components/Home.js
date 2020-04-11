@@ -1,15 +1,11 @@
 import React from "react";
 import Logo from "./Logo";
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import NavBar from "@material-ui/core/AppBar"
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import { Drawer, MenuItem } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import {setMenuToggleStatus} from "../Actions";
@@ -35,8 +31,20 @@ class Home extends React.Component {
     handleProfileClick(e) {
         this.props.history.push("/Profile");
     }
-    handleLogOutClick (e) {
+    async handleLogOutClick (e) {
+        e.preventDefault();
 
+        //Call APi for logging out User.
+    const logOutOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json',
+                    'Authorization': 'Bearer'+ ' '+ this.props.userId + ',' + this.props.authToken }
+    };
+    const logoutRequest = await fetch("https://hiring.getbasis.co/candidate/users/logout/" + this.props.userId,logOutOptions);
+    const logOutResponse = await logoutRequest.json();
+        if(logOutResponse.success === true) {
+            this.props.history.replace("/", null,null);
+        }
     }
     render() {
         return (
@@ -87,7 +95,9 @@ class Home extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
-        menuToggleStatus: state.HomePageReducer.MenutoggleStatus
+        menuToggleStatus: state.HomePageReducer.MenutoggleStatus,
+        userId: state.SignIn.userId,
+        authToken: state.SignIn.authToken
     }
 }
 const mapDispatchToProps = (dispatch) => {
